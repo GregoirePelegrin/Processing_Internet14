@@ -10,10 +10,13 @@ class Creator{
     ArrayList<Cell> neighbours = current.getNeighbours();
     
     if(neighbours.size() != 0){
+      stack.add(this.current);
       int next = floor(random(neighbours.size()));
       removeWall(this.current, neighbours.get(next));
       this.current = neighbours.get(next);
       this.current.visited = true;
+    } else if(stack.size() != 0){
+      this.current = stack.remove(stack.size()-1);
     } else {
       noLoop();
     }

@@ -1,18 +1,19 @@
 ArrayList<Cell> maze;
 Creator creator;
+ArrayList<Cell> stack;
 
 int nbrCellWidth;
 int nbrCellHeight;
 float sizeCell;
 
 void setup(){
-  size(601, 601);
-  frameRate(10);
+  size(801, 801);
+  frameRate(60);
   
   maze = new ArrayList<Cell>();
   
-  nbrCellWidth = 20;
-  nbrCellHeight = 20;
+  nbrCellWidth = 10;
+  nbrCellHeight = 10;
   sizeCell = min(width/nbrCellWidth, height/nbrCellHeight);
   
   for(int i=0; i<nbrCellWidth; i++){
@@ -23,23 +24,22 @@ void setup(){
   }
   
   creator = new Creator();
+  
+  stack = new ArrayList<Cell>();
 }
 
 void draw(){
   background(0);
   
-  for(int i=0; i<maze.size(); i++){
-    /*if(i == 2){
-      for(Cell cell : maze.get(i).getNeighbours()){
-        fill(255);
-        rect(cell.row * sizeCell, cell.col * sizeCell, sizeCell, sizeCell);
-      }
-      rect(maze.get(i).row * sizeCell, maze.get(i).col * sizeCell, sizeCell, sizeCell);
-    }*/
-    maze.get(i).display();
+  for(Cell cell : maze){
+    cell.display();
   }
   creator.nextStep();
   creator.display();
+  for(Cell cell : stack){
+    fill(150, 0, 0, 150);
+    rect(cell.row * sizeCell, cell.col * sizeCell, sizeCell, sizeCell);
+  }
 }
 
 void removeWall(Cell c1, Cell c2){
